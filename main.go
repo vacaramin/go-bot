@@ -92,6 +92,8 @@ func onMessageCreate(event *events.MessageCreate) {
 
 		message := resp.Choices[0].Message.Content
 		fmt.Println("message sent:", message)
-		_, _ = event.Client().Rest().CreateMessage(event.ChannelID, discord.NewMessageCreateBuilder().SetContent(message).Build())
+		replymessage := discord.NewMessageCreateBuilder().SetMessageReferenceByID(event.MessageID)
+		_, _ = event.Client().Rest().CreateMessage(event.ChannelID, replymessage.SetContent(message).Build())
+
 	}
 }
